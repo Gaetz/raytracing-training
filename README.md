@@ -37,7 +37,7 @@ You have an example project on https://github.com/Gaetz/raytracing-training
 
 Our raytracing program won't display immediatly the generated image. It will rather create a .ppm file. 
 
-Yo read this file, add the TinyViewer extension in Visual Code.
+To read this file, add the TinyViewer extension in Visual Code.
 
 ## Raytracing course
 
