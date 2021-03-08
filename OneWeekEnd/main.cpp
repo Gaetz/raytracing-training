@@ -20,7 +20,7 @@ Vec3 color(const Ray &r, Hittable *world) {
 
 int main() {
     std::ofstream output;
-    output.open("../output.ppm");
+    output.open("output.ppm");
 
     int nx = 200;
     int ny = 100;
