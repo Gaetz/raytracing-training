@@ -1,9 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <limits>
+#include <array>
 
 #include "HittableList.h"
 #include "Sphere.h"
+
+using std::array;
 
 float MAX_FLOAT = std::numeric_limits<float>::max();
 
