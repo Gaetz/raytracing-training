@@ -1,5 +1,5 @@
-#ifndef Vec3_H
-#define Vec3_H
+#ifndef VEC3_H
+#define VEC3_H
 
 #include <iostream>
 #include <cmath>

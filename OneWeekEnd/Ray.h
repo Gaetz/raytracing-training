@@ -1,7 +1,3 @@
-//
-// Created by gaetz on 13/02/2020.
-//
-
 #ifndef RAY_H
 #define RAY_H
 

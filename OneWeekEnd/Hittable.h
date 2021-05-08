@@ -1,7 +1,3 @@
-//
-// Created by gaetz on 14/02/2020.
-//
-
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
