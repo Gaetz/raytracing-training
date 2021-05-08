@@ -3,19 +3,22 @@
 
 #include "Ray.h"
 
+class Material;
+
 struct HitRecord {
     float t;
     Vec3 p;
     Vec3 normal;
+    Material* material;
 };
 
 class Hittable {
 public:
     virtual bool hit(
-            const Ray &r,
+            const Ray& r,
             float tMin,
             float tMax,
-            HitRecord &rec
+            HitRecord& rec
     ) const = 0;
 };
 

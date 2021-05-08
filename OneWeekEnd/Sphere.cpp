@@ -1,8 +1,9 @@
-//
-// Created by gaetz on 14/02/2020.
-//
-
 #include "Sphere.h"
+#include "Material.h"
+
+Sphere::~Sphere() {
+    delete material;
+}
 
 bool Sphere::hit(const Ray &r, float tMin, float tMax, HitRecord &rec) const {
     Vec3 oc = r.origin() - center;
@@ -16,6 +17,7 @@ bool Sphere::hit(const Ray &r, float tMin, float tMax, HitRecord &rec) const {
             rec.t = temp;
             rec.p = r.pointAtParameter(rec.t);
             rec.normal = (rec.p - center) / radius;
+            rec.material = material;
             return true;
         }
         temp = (-b + sqrt(discriminant)) / a;
@@ -23,6 +25,7 @@ bool Sphere::hit(const Ray &r, float tMin, float tMax, HitRecord &rec) const {
             rec.t = temp;
             rec.p = r.pointAtParameter(rec.t);
             rec.normal = (rec.p - center) / radius;
+            rec.material = material;
             return true;
         }
     }

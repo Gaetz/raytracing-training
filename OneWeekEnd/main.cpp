@@ -7,17 +7,23 @@
 #include "Sphere.h"
 #include "Camera.h"
 #include "Random.h"
+#include "Lambertian.h"
+#include "Metal.h"
 
 using std::array;
 
 float MAX_FLOAT = std::numeric_limits<float>::max();
 
-Vec3 color(const Ray &r, Hittable *world) {
+Vec3 color(const Ray &r, Hittable *world, int depth) {
     HitRecord rec;
     if (world->hit(r, 0.001, MAX_FLOAT, rec)) {
-        // Diffuse: light bounces randomly until it is absorbed. This create shadows.
-        Vec3 target = rec.p + rec.normal + randomInUnitSphere();
-        return 0.5 * color(Ray(rec.p, target - rec.p), world);
+        Ray scattered;
+        Vec3 attenuation;
+        if(depth < 50 && rec.material->scatter(r, rec, attenuation, scattered)) {
+            return attenuation * color(scattered, world, depth+1);
+        } else {
+            return Vec3(0, 0, 0);
+        }
     } else {
         // Display the sky
         Vec3 unitDirection = unitVector(r.direction());
@@ -35,10 +41,12 @@ int main() {
     int ns = 100;   // Number of samples
     output << "P3\n" << nx << " " << ny << "\n255\n";
 
-    Hittable* list[2];
-    list[0] = new Sphere(Vec3(0, 0, -1), 0.5);
-    list[1] = new Sphere(Vec3(0, -100.5, -1), 100);
-    Hittable* world = new HittableList(list, 2);
+    Hittable* list[4];
+    list[0] = new Sphere(Vec3(0, 0, -1), 0.5, new Lambertian(Vec3(0.8, 0.3, 0.3)));
+    list[1] = new Sphere(Vec3(0, -100.5, -1), 100, new Lambertian(Vec3(0.8, 0.8, 0.0)));
+    list[2] = new Sphere(Vec3(1, 0, -1), 0.5, new Metal(Vec3(0.8, 0.6, 0.2)));
+    list[3] = new Sphere(Vec3(-1, 0, -1), 0.5, new Metal(Vec3(0.8, 0.8, 0.8)));
+    Hittable* world = new HittableList(list, 4);
     Camera camera;
 
     for (int j = ny - 1; j >= 0; j--) {
@@ -50,7 +58,7 @@ int main() {
                 float u = float(i + randomDouble()) / float(nx);
                 float v = float(j + randomDouble()) / float(ny);
                 Ray r = camera.getRay(u, v);
-                col += color(r, world);
+                col += color(r, world, 0);
             }
             col /= float(ns);
 
@@ -66,6 +74,10 @@ int main() {
         }
     }
 
+    // Clean
+    for(auto hittable : list) {
+        delete hittable;
+    }
     output.close();
     return 0;
 }
