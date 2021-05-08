@@ -11,4 +11,12 @@ inline double randomDouble() {
     return randGenerator();
 }
 
+Vec3 randomInUnitSphere() {
+    Vec3 p;
+    do {
+        p = 2.0 * Vec3(randomDouble(), randomDouble(), randomDouble()) - Vec3(1, 1, 1);
+    } while (p.squaredLength() >= 1.0);
+    return p;
+}
+
 #endif // RANDOM_H

@@ -14,8 +14,10 @@ float MAX_FLOAT = std::numeric_limits<float>::max();
 
 Vec3 color(const Ray &r, Hittable *world) {
     HitRecord rec;
-    if (world->hit(r, 0.0, MAX_FLOAT, rec)) {
-        return 0.5 * Vec3(rec.normal.x() + 1, rec.normal.y() + 1, rec.normal.z() + 1);
+    if (world->hit(r, 0.001, MAX_FLOAT, rec)) {
+        // Diffuse: light bounces randomly until it is absorbed. This create shadows.
+        Vec3 target = rec.p + rec.normal + randomInUnitSphere();
+        return 0.5 * color(Ray(rec.p, target - rec.p), world);
     } else {
         // Display the sky
         Vec3 unitDirection = unitVector(r.direction());
@@ -51,6 +53,9 @@ int main() {
                 col += color(r, world);
             }
             col /= float(ns);
+
+            // Use Gamma 2
+            col = Vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
 
             // Output color in file
             int ir = int(255.99 * col[0]);
