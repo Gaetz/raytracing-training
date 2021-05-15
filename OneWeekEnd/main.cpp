@@ -49,7 +49,7 @@ int main() {
     list[3] = new Sphere(Vec3(-1, 0, -1), 0.5, new Dielectric(1.5f));
     list[4] = new Sphere(Vec3(-1, 0, -1), -0.45, new Dielectric(1.5f));
     Hittable* world = new HittableList(list, 5);
-    Camera camera;
+    Camera camera { Vec3(-2, 2, 1), Vec3(0, 0, -1), Vec3(0, 1, 0), 30, float(nx) / float(ny) };
 
     for (int j = ny - 1; j >= 0; j--) {
         for (int i = 0; i < nx; i++) {
