@@ -165,5 +165,21 @@ inline Vec3 reflect(const Vec3& v, const Vec3& n) {
     return v - 2 * dot(v, n) * n;
 }
 
+inline bool refract(const Vec3& v, const Vec3& n, float niOverNt, Vec3& refracted) {
+    Vec3 uv = unitVector(v);
+    float dt = dot(uv, n);
+    float discriminant = 1.0 - niOverNt * niOverNt * (1 - dt * dt);
+    if(discriminant > 0) {
+        refracted = niOverNt * (uv - n * dt) - n * sqrt(discriminant);
+        return true;
+    }
+    return false;
+}
+
+inline float schlick(float cosine, float refractionIndex) {
+    float r0 = (1 - refractionIndex) / (1 + refractionIndex);
+    r0 = r0 * r0;
+    return r0 + (1 - r0) * pow((1 - cosine), 5);
+}
 
 #endif

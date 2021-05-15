@@ -9,6 +9,7 @@
 #include "Random.h"
 #include "Lambertian.h"
 #include "Metal.h"
+#include "Dielectric.h"
 
 using std::array;
 
@@ -41,12 +42,13 @@ int main() {
     int ns = 100;   // Number of samples
     output << "P3\n" << nx << " " << ny << "\n255\n";
 
-    Hittable* list[4];
+    Hittable* list[5];
     list[0] = new Sphere(Vec3(0, 0, -1), 0.5, new Lambertian(Vec3(0.8, 0.3, 0.3)));
     list[1] = new Sphere(Vec3(0, -100.5, -1), 100, new Lambertian(Vec3(0.8, 0.8, 0.0)));
     list[2] = new Sphere(Vec3(1, 0, -1), 0.5, new Metal(Vec3(0.8, 0.6, 0.2), 0.3f));
-    list[3] = new Sphere(Vec3(-1, 0, -1), 0.5, new Metal(Vec3(0.8, 0.8, 0.8), 1.0f));
-    Hittable* world = new HittableList(list, 4);
+    list[3] = new Sphere(Vec3(-1, 0, -1), 0.5, new Dielectric(1.5f));
+    list[4] = new Sphere(Vec3(-1, 0, -1), -0.45, new Dielectric(1.5f));
+    Hittable* world = new HittableList(list, 5);
     Camera camera;
 
     for (int j = ny - 1; j >= 0; j--) {
