@@ -42,10 +42,10 @@ int main() {
     int ns = 100;   // Number of samples
     output << "P3\n" << nx << " " << ny << "\n255\n";
 
-    Vec3 lookFrom { 3, 3, 2 };
-    Vec3 lookAt { 0, 0, -1 };
+    Vec3 lookFrom { -1, 2, 3 };
+    Vec3 lookAt { -1, 0, 0 };
     float distToFocus = (lookFrom - lookAt).length();
-    float aperture = 2.0;
+    float aperture = 0.1;
 
     Hittable* list[5];
     list[0] = new Sphere(Vec3(0, 0, -1), 0.5, new Lambertian(Vec3(0.8, 0.3, 0.3)));
