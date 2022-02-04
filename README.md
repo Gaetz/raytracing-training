@@ -252,3 +252,7 @@ inline float schlick(float cosine, float refractionIndex) {
 
 #endif
 ```
+
+## Additional resources
+
+Raytracing theory :  https://www.youtube.com/playlist?list=PL5B692fm6--sgm8Uiava0IIvUojjFOCSR
